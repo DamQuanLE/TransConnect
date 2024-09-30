@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransConnect", "TransConnect\TransConnect.csproj", "{E58C867B-7323-4708-951D-4CFF8C617112}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E58C867B-7323-4708-951D-4CFF8C617112}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E58C867B-7323-4708-951D-4CFF8C617112}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E58C867B-7323-4708-951D-4CFF8C617112}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E58C867B-7323-4708-951D-4CFF8C617112}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CF580D20-BE4E-401D-99F8-81338B71FC27}
+	EndGlobalSection
+EndGlobal

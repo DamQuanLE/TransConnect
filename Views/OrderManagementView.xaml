@@ -1,0 +1,111 @@
+﻿<Window x:Class="TransConnect.Views.OrderManagementView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TransConnect.Views"
+        xmlns:md="clr-namespace:TransConnect.Models"
+        mc:Ignorable="d"
+        xmlns:vm="clr-namespace:TransConnect.ViewModels"
+        Title="Order Management" Height="700" Width="1000">
+    <Window.DataContext>
+        <vm:OrderManagementViewModel />
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="7*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.RowSpan="2">
+            <ComboBox ItemsSource="{Binding Statuses}" SelectedItem="{Binding SelectedStatus}" Margin="10" Padding="5" />
+            <ListBox ItemsSource="{Binding Orders}" SelectedItem="{Binding SelectedOrder}" Height="500" />
+        </StackPanel>
+        <StackPanel Grid.Column="1" Margin="5" Visibility="{Binding OrderInfoVisibility}">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Client Name: " Width="100" />
+                <Label FontWeight="Bold" Content="{Binding SelectedOrder.Client.FullName}" Width="150" />
+                <Label Content="Client Phone: " Width="100" />
+                <Label FontWeight="Bold" Content="{Binding SelectedOrder.Client.Phone}" Width="150" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Vehicle Kind: " Width="100" />
+                <Label FontWeight="Bold" Content="{Binding VehicleDescription}" Width="150" />
+                <Label Content="Creation Time: " Width="100" />
+                <Label FontWeight="Bold" Content="{Binding SelectedOrder.CreationDate}" Width="150" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Total: " Width="100" />
+                <Label FontWeight="Bold" Foreground="Red" FontSize="14" Content="{Binding SelectedOrder.Price}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Visibility="{Binding CarOrderVisibility}">
+                <Label Content="Number of passengers: " Width="150" />
+                <Label FontWeight="Bold" Content="{Binding SelectedOrder.(md:CarOrder.NumOfPassengers)}" />
+            </StackPanel>
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Visibility="{Binding VanOrderVisibility}">
+                <Label Content="Purpose of usage: " Width="150" HorizontalAlignment="Left" />
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Height="100" Margin="5 0">
+                    <TextBlock TextWrapping="Wrap" FontWeight="Bold" Text="{Binding SelectedOrder.(md:VanOrder.Purpose)}" />
+                </ScrollViewer>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Visibility="{Binding TruckOrderVisibility}">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Volume: " Width="150" />
+                    <Label FontWeight="Bold" Content="{Binding SelectedOrder.(md:HeavyTruckOrder.Volume)}" />
+                </StackPanel>
+                <Label Content="Materials: " Width="150" HorizontalAlignment="Left" />
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Height="100" Margin="5 0">
+                    <TextBlock TextWrapping="Wrap" FontWeight="Bold" Text="{Binding SelectedOrder.(md:HeavyTruckOrder.Materials)}" />
+                </ScrollViewer>
+            </StackPanel>
+
+            <DataGrid Height="150" Margin="10" ItemsSource="{Binding SelectedOrder.OrderPaths}" CanUserAddRows="False" CanUserDeleteRows="False" MinRowHeight="30" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="From" Binding="{Binding From}" Width="*" IsReadOnly="True" />
+                    <DataGridTextColumn Header="To" Width="*" Binding="{Binding To}" IsReadOnly="True"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <StackPanel Orientation="Horizontal" Visibility="{Binding ConfirmVisibility}">
+                <Label Content="Choose driver: " Width="150" />
+                <ComboBox Width="150" ItemsSource="{Binding Drivers}" SelectedItem="{Binding PrepareDriver}" />
+                <Label Content="Choose vehicle: " Width="140" Margin="5 0" />
+                <ComboBox Width="150" ItemsSource="{Binding Vehicles}" SelectedItem="{Binding PrepareVehicle}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Visibility="{Binding PrepareVisibility}">
+                <Label Content="Driver: " Width="150" />
+                <Label Width="150" Content="{Binding SelectedOrder.Driver}" />
+                <Label Content="Vehicle ID: " Width="140" Margin="5 0" />
+                <Label Width="150" Content="{Binding SelectedOrder.Vehicle}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Visibility="{Binding DeliverVisibility}">
+                <Label Content="Driver: " Width="150" />
+                <Label Width="150" Content="{Binding SelectedOrder.Driver}" />
+                <Label Content="Vehicle ID: " Width="140" Margin="5 0" />
+                <Label Width="150" Content="{Binding SelectedOrder.Vehicle}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Visibility="{Binding CompleteVisibility}">
+                <Label Content="Driver: " Width="150" />
+                <Label Width="150" Content="{Binding SelectedOrder.Driver}" />
+                <Label Content="Vehicle ID: " Width="140" Margin="5 0" />
+                <Label Width="150" Content="{Binding SelectedOrder.Vehicle}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Visibility="{Binding DoneVisibility}">
+                <Label Content="Driver: " Width="150" />
+                <Label Width="150" Content="{Binding SelectedOrder.Driver}" />
+                <Label Content="Vehicle ID: " Width="140" Margin="5 0" />
+                <Label Width="150" Content="{Binding SelectedOrder.Vehicle}" />
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="20"  Visibility="{Binding OrderInfoVisibility}">
+            <Button Visibility="{Binding ConfirmVisibility}" Content="Confirm" Margin="10 0" Foreground="Green" FontSize="14" Background="AliceBlue" FontWeight="ExtraBold" Padding="10" Command="{Binding NextStateCommand}" />
+            <Button Visibility="{Binding PrepareVisibility}" Content="Prepare" Margin="10 0" Foreground="Green" FontSize="14" Background="AliceBlue" FontWeight="ExtraBold" Padding="10" Command="{Binding NextStateCommand}" />
+            <Button Visibility="{Binding DeliverVisibility}" Content="Deliver" Margin="10 0" Foreground="Green" FontSize="14" Background="AliceBlue" FontWeight="ExtraBold" Padding="10" Command="{Binding NextStateCommand}" />
+            <Button Visibility="{Binding CompleteVisibility}" Content="Complete" Margin="10 0" Foreground="Green" FontSize="14" Background="AliceBlue" FontWeight="ExtraBold" Padding="10" Command="{Binding NextStateCommand}" />
+            <Button Visibility="{Binding CancelVisibility}" Content="Cancel" Margin="10 0" Foreground="Red" FontWeight="Bold" Padding="10" Command="{Binding CancelCommand}" />
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,52 @@
+﻿<Window x:Class="TransConnect.Views.PriceListView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TransConnect.Views"
+        mc:Ignorable="d"
+        xmlns:vm="clr-namespace:TransConnect.ViewModels"
+        Title="PriceListView" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:PriceListViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <ComboBox ItemsSource="{Binding PriceTypes}" Margin="30 10" SelectedItem="{Binding SelectedPriceType}"/>
+            <ComboBox ItemsSource="{Binding VehicleTypes}" Margin="30 10" SelectedItem="{Binding SelectedVehicleType}" Grid.Column="1"/>
+        </Grid>
+        <DataGrid Grid.Row="1" SelectedIndex="{Binding SelectedIndex}" ItemsSource="{Binding PriceLists}" CanUserAddRows="False" CanUserDeleteRows="False" MinRowHeight="30" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}" IsReadOnly="True" Visibility="Collapsed"/>
+                <DataGridTextColumn Header="From" Width="200" Binding="{Binding From}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Price" Width="*" Binding="{Binding UnitPrice}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="From" Height="30"/>
+                <TextBox Width="100" Text="{Binding PrepareFrom}" Height="30" />
+                <Label Content="Price" Height="30" />
+                <TextBox Width="100" Text="{Binding PrepareUnitPrice}" Height="30" />
+                <Button Content="Add" Command="{Binding AddCommand}" Width="100" Height="30" Background="CadetBlue" FontWeight="Bold" BorderBrush="Blue"/>
+            </StackPanel>
+            <Button Grid.Column="1" Content="Delete" Command="{Binding DeleteCommand}" Width="100" Height="40" Background="CadetBlue" FontWeight="Bold" BorderBrush="Blue"/>
+            <Button Grid.Column="2" Content="Save" Command="{Binding SaveCommand}" Width="100" Height="40" Background="CadetBlue" FontWeight="Bold" BorderBrush="Blue"/>
+        </Grid>
+        
+    </Grid>
+</Window>

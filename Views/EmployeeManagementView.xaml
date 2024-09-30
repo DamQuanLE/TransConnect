@@ -1,0 +1,71 @@
+﻿<Window x:Class="TransConnect.Views.EmployeeView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TransConnect.Views"
+        mc:Ignorable="d"
+        xmlns:vm="clr-namespace:TransConnect.ViewModels"
+        Title="Employee Management" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:EmployeeManagementViewModel />
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <ListBox ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee}" Height="400" />
+        </StackPanel>
+        <StackPanel Grid.Column="1" Margin="5">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="First Name: " Width="70" />
+                <TextBox FontWeight="Bold" Width="100" Text="{Binding SelectedEmployee.FirstName}" />
+                <Label Content="Last Name: " Margin="20 0 0 0" Width="70" />
+                <TextBox FontWeight="Bold" Width="100" Text="{Binding SelectedEmployee.LastName}" />
+                <Label Content="Gender: " Margin="20 0 0 0" Width="50" />
+                <ComboBox Width="70" ItemsSource="{Binding GenderDescriptions}" SelectedItem="{Binding SelectedGenderDescription}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+                <Label Content="Email: " Width="70" />
+                <TextBox Width="150" Text="{Binding SelectedEmployee.Email}" />
+                <Label Content="Phone: " Margin="20 0 0 0" Width="70" />
+                <TextBox Width="150" Text="{Binding SelectedEmployee.Phone}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+                <Label Content="Address: " Width="70" />
+                <TextBox Width="390" Text="{Binding SelectedEmployee.Address}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+                <Label Content="SSN: " Width="70" />
+                <TextBox Width="150" Text="{Binding SelectedEmployee.SocialSecurityNumber}" />
+                <Label Content="DOB: " Margin="20 0 0 0" Width="70" />
+                <DatePicker Width="150" SelectedDate="{Binding SelectedEmployee.DateOfBirth}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+                <Label Content="Date Of Entry: " Width="90" />
+                <DatePicker Width="130" SelectedDate="{Binding SelectedEmployee.DateOfEntry}" />
+                <Label Content="Salary: " Margin="20 0 0 0" Width="70" />
+                <TextBox Width="150" Text="{Binding SelectedEmployee.Salary}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+                <Label Content="Position: " Width="70" />
+                <TextBox Width="150" Text="{Binding SelectedEmployee.Position}" x:Name="txtPosition" />
+                <Label Content="Manager: " Width="70" />
+                <ComboBox ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedManager}" Width="150" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+                <Label Content="Is a driver? " Width="70" />
+                <CheckBox IsChecked="{Binding IsDriver}" x:Name="ckdIsDriver" VerticalAlignment="Center" Checked="ckdIsDriver_Checked" Unchecked="ckdIsDriver_Unchecked" />
+                <Label Content="Total orders" Width="100" Margin="10 0" Visibility="{Binding DriverVisibility}"/>
+                <Label FontWeight="Bold" Visibility="{Binding DriverVisibility}" Content="{Binding OrderCount}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="20">
+                <Button Content="Save" Margin="10 0" Foreground="Green" FontSize="14" Background="AliceBlue" FontWeight="ExtraBold" Padding="10" Command="{Binding SaveEmployee}" />
+                <Button Content="Add" Margin="10 0" FontWeight="Bold" Foreground="Blue" Padding="10" Command="{Binding SwitchToAddNewEmployeeCommand}" />
+                <Button Content="Delete" Margin="10 0" Foreground="Red" FontWeight="Bold" Padding="10" Command="{Binding DeleteEmployee}" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

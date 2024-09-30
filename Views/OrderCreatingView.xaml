@@ -1,0 +1,68 @@
+﻿<Window x:Class="TransConnect.Views.OrderCreatingView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TransConnect.Views"
+        mc:Ignorable="d"
+        xmlns:vm="clr-namespace:TransConnect.ViewModels"
+        Title="Creating New Order" Height="600" Width="800">
+    <Window.DataContext>
+        <vm:OrderCreatingViewModel/>
+    </Window.DataContext>
+    <StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="5">
+            <Label Content="Select client: " Width="100" />
+            <ComboBox Width="200" ItemsSource="{Binding Clients}" SelectedItem="{Binding SelectedClient}" />
+            <Label Content="Select vehicle kind: " Margin="20 0 0 0" Width="150" />
+            <ComboBox Width="200" ItemsSource="{Binding VehicleTypes}" SelectedItem="{Binding SelectedVehicleType}" SelectionChanged="ComboBox_SelectionChanged" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="5">
+            <Label Content="From: " Width="100" />
+            <ComboBox Width="200" ItemsSource="{Binding Points}" SelectedItem="{Binding SelectedStartPoint}" />
+            <Label Content="To: " Margin="20 0 0 0" Width="150" />
+            <ComboBox Width="200" ItemsSource="{Binding Points}" SelectedItem="{Binding SelectedEndPoint}" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="5">
+            <Label Content="Calculate price by: " Width="120" />
+            <ComboBox Width="180" ItemsSource="{Binding PriceTypes}" SelectedItem="{Binding SelectedPriceType}" />
+            <Button FontWeight="Bold" Content="Calculate" Margin="20 0 0 0" Command="{Binding CalculatePriceCommand}" />
+            <Label Content="(No route found!)" FontWeight="Bold" Foreground="Red"  Visibility="{Binding NoRouteVisibility}" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="5">
+            <Label Content="Distance: " Width="100" />
+            <Label Content="{Binding CalculatedDistance}" FontWeight="Bold" FontSize="14" Width="200" />
+            <Label Content="Total: " Width="100" />
+            <Label Content="{Binding CalculatedPrice}" Foreground="Green" FontWeight="Bold" FontSize="14" />
+        </StackPanel>
+        <StackPanel x:Name="stkForCar" Visibility="Visible" Orientation="Horizontal" Margin="5">
+            <Label Content="Number of passensers: " Width="150" />
+            <TextBox Width="200" Text="{Binding NumOfPassengers}" />
+        </StackPanel>
+        <StackPanel x:Name="stkForVan" Visibility="Collapsed" Orientation="Horizontal" Margin="5">
+            <Label Content="Purpose of usage: " Width="150" />
+            <TextBox TextWrapping="Wrap" AcceptsReturn="True" Width="500" Height="50" Text="{Binding Purpose}" />
+        </StackPanel>
+        <StackPanel x:Name="stkForHeavyTruck" Visibility="Collapsed" Orientation="Vertical" Margin="5">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Materials: " Width="150" />
+                <TextBox TextWrapping="Wrap" AcceptsReturn="True" Width="500" Height="50" Text="{Binding Materials}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 5">
+                <Label Content="Volume: " Width="150" />
+                <TextBox Width="150" Text="{Binding Volume}" />
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="Create Order" Command="{Binding CreateOrderCommand}" Margin="10" Padding="5" FontSize="15" FontWeight="Bold" />
+        </StackPanel>
+
+        <DataGrid Height="200" Margin="10" ItemsSource="{Binding PriceLists}" CanUserAddRows="False" CanUserDeleteRows="False" MinRowHeight="30" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="From" Width="200" Binding="{Binding From}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Price" Width="*" Binding="{Binding UnitPrice}" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </StackPanel>
+</Window>
